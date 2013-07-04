@@ -83,12 +83,12 @@
     <keyword>Remote-LFA</keyword>
     <keyword>IGP</keyword>
     <keyword>Node Protection</keyword>
-    <keyword>Label advertisement</keyword>
 
     <abstract>
-	<t> This document describes a single mechanism for achieving node-protection,
-	and collection of complete path attributes (needed to facilitate policy 
-	based backup path selection) along backup paths obtained with Remote-LFA.
+	<t> This document describes procedures for achieving node-protection,
+	and collection of complete backup path characteristics.
+	Knowledge about a backup path attributes is precursory to select one,
+	based on operator defined policy constraints.
 	</t>
     </abstract>
 
@@ -101,13 +101,13 @@
 </front>
 
 <middle>
-    <section title="Introduction">
-	<t> The current <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> specification is based on a per link computation and hence guarantees only link-protection. The resulting Remote-LFA backup nexthops (also referred to as the PQ-nodes) does not guarantee node-protection for all destinations in case of failure of the primary nexthop node.</t>
+  <section title="Introduction">
+    <t> The current <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> specification is based on a per link computation and hence guarantees only link-protection. The resulting Remote-LFA backup nexthops (also referred to as the PQ-nodes) does not guarantee node-protection for all destinations in case of failure of the primary nexthop node.</t>
 
-	<t> Also, as an implication of the <xref target="I-D.litkowski-rtgwg-lfa-manageability">LFA Manageability</xref> specification, in case, a computing router finds multiple Remote-LFA backup nexthops, a backup-selection policy configured on the computing router will require the Remote-LFA implementation to gather all the required path attributes along each link on Remote-LFA backup path. A backup path trough a Remote-LFA nexthop comprises of segment from the computing router to the PQ-node, and the segment from the PQ-node to the destination we are trying to protect. With current LFA<xref target="RFC5286"/> and Remote-LFA implementation, we run SPF (and reverse SPF) with the computing router and its immediate 1-hop routers only as the root. This enables us to compute path attributes for the first path segment. But, the computing router is unable to gather any path attributes for the later(i.e. from the PQ-node to destination). Consecutively any policy-based selection of backup paths will consider only the path from the computing router till the PQ-node.</t>
+    <t> Also, as an implication of the <xref target="I-D.litkowski-rtgwg-lfa-manageability">LFA Manageability</xref> specification, in case, a computing router finds multiple Remote-LFA backup nexthops, a backup-selection policy configured on the computing router will require the Remote-LFA implementation to gather all the required path attributes along each link on Remote-LFA backup path. A backup path trough a Remote-LFA nexthop comprises of segment from the computing router to the PQ-node, and the segment from the PQ-node to the destination we are trying to protect. With current LFA<xref target="RFC5286"/> and Remote-LFA implementation, we run SPF (and reverse SPF) with the computing router and its immediate 1-hop routers only as the root. This enables us to compute path attributes for the first path segment. But, the computing router is unable to gather any path attributes for the later(i.e. from the PQ-node to destination). Consecutively any policy-based selection of backup paths will consider only the path from the computing router till the PQ-node.</t>
 
-	<t> This document describes a single mechanism for both gaurantee-ing node-protection with Remote-LFA, as well as, collection of complete path attributes (needed to facilitate policy-based backup path selection) for backup paths obtained with Remote-LFA.</t>
-    </section>
+    <t> This document describes a single mechanism for both gaurantee-ing node-protection with Remote-LFA, as well as, collection of complete path attributes (needed to facilitate policy-based backup path selection) for backup paths obtained with Remote-LFA.</t>
+  </section>
 
     <section title="Node Protection with Remote-LFA">
     <section title="The Problem">
@@ -128,21 +128,21 @@
 	<t>In the above topology, for all (non-ECMP) destinations reachable via the S-E link there is no standard LFA backup. As per the <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> specifications node C being the PQ-node for the S-E link provides backup nexthop for all the above destinations. Table 1 below, shows all possible primary and Remote-LFA backup paths for each destination.</t>
 
 	<texttable anchor="table1" title="Backup paths with Remote-LFA">
-	    <ttcol align="left">Destination</ttcol>
-	    <ttcol align="left">Primary Path</ttcol>
-	    <ttcol align="left">Remote-LFA Backup Path</ttcol>
-	    <c>D</c>
-	    <c>S->E->D</c>
-	    <c>S->A->B->C->D</c>
-	    <c>E</c>
-	    <c>S->E</c>
-	    <c>S->A->B->C->D->E</c>
-	    <c>F</c>
-	    <c>S->E->F</c>
-	    <c>S->A->B->C->D->E->F</c>
-	    <c>G</c>
-	    <c>S->E->D->G</c>
-	    <c>S->A->B->C->D->G</c>
+	  <ttcol align="left">Destination</ttcol>
+	  <ttcol align="left">Primary Path</ttcol>
+	  <ttcol align="left">Remote-LFA Backup Path</ttcol>
+	  <c>D</c>
+	  <c>S->E->D</c>
+	  <c>S->A->B->C->D</c>
+	  <c>E</c>
+	  <c>S->E</c>
+	  <c>S->A->B->C->D->E</c>
+	  <c>F</c>
+	  <c>S->E->F</c>
+	  <c>S->A->B->C->D->E->F</c>
+	  <c>G</c>
+	  <c>S->E->D->G</c>
+	  <c>S->A->B->C->D->G</c>
 	</texttable>
 
 	<t>A closer look at the Table 1 above shows that, while the PQ-node C provides link-protection for all the destinations, it does not provide node-protection for destinations E and F. In the event of the node-failure on primary nexthop E, the backup path from Remote-LFA nexthop C to E and F also becomes unavailable. So for a Remote-LFA nexthop to provide node-protection for a given destination, it is mandatory that, the shortest path from the given PQ-node to the given destination must not traverse primary nexthop. </t>
