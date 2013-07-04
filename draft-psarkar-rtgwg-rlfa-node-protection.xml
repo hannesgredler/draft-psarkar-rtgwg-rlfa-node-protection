@@ -253,10 +253,12 @@
       the backup paths (one through each of the PQ-nodes), will need to be
       collected. The Remote-LFA backup path via a given PQ-node to a given
       destination comprises of two path segments as follows.</t>
-      <t><list style="symbols">
-	<t>1. Path segment from the computing router to the
+      <t><list style="numbers">
+
+	<t>Path segment from the computing router to the
 	PQ-node (Remote-LFA backup nexthop), and</t>
-	<t>2. Path segment from the PQ-node to the destination
+
+	<t>Path segment from the PQ-node to the destination
 	we are trying to protect. </t>
       </list></t>
 
