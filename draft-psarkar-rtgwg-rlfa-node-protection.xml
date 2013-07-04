@@ -86,10 +86,19 @@
     <keyword>Node Protection</keyword>
 
     <abstract>
-      <t>This document describes procedures for achieving node-protection,
-      and collection of complete backup path characteristics.
-      Knowledge about a backup path attributes is precursory to apply
-      operator defined policy for eliminating paths not fitting
+      <t>The alternate alternates computed following the current 
+      <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
+      specification gaurantees only link-protection. The resulting 
+      Remote-LFA alternate nexthops (also called PQ-nodes), may not 
+      gaurantee node-protection for all destinations being protected 
+      by it.</t>
+
+      <t>This document describes procedures for determining if a given 
+      PQ-node provides node-protection for a specific destination or 
+      not. The document also shows how the same procedure can be utilised 
+      for collection of complete characteristics for alternate paths. 
+      Knowledge about the characteristics of all alternate path is precursory  
+      to apply operator defined policy for eliminating paths not fitting 
       constraints.</t>
     </abstract>
 
@@ -103,41 +112,38 @@
 
   <middle>
   <section title="Introduction">
-    <t>The current <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
-    specification only provides procedures for link-protection.
-    The resulting Remote-LFA backup nexthops (also
-    referred to as the PQ-nodes) does not guarantee node-protection for
-    all destinations in case of failure of the primary nexthop node.</t>
+    <t>The <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
+    specification provides loop-free alternates that gaurantees only 
+    link-protection. The resulting Remote-LFA alternate nexthops (also
+    referred to as the PQ-nodes) may not provide node-protection for
+    all destinations covered by the same, in case of failure of the 
+    primary nexthop node. Neither does the specification provide a means 
+    to determine the same.</t>
 
-    <t>Also, as an implication of the <xref
-    target="I-D.litkowski-rtgwg-lfa-manageability">LFA
-    Manageability</xref> document, in case, a computing router finds
-    multiple Remote-LFA backup nexthops, a backup-selection policy
-    configured on the computing router will require the Remote-LFA
-    implementation to gather all the required path attributes along each
-    link on Remote-LFA backup path. A backup path trough a Remote-LFA
-    nexthop comprises two segments:</t>
-
-    <t><list style="numbers">
-      <t>The path segment from computing router to the PQ-node, and</t>
-      <t>The path segment from PQ-node to the destination node</t>
-    </list></t>
+    <t>Also, the <xref target="I-D.ietf-rtgwg-lfa-manageability">
+    LFA Manageability</xref> document, requires a computing router to 
+    find all possible (includin all possible Remote-LFA) alternate nexthops, 
+    collect the complete set of path attributes for each alternate path,  
+    run a alternate-selection policy (configured by the operator), and find 
+    the best alternate path. This will require the Remote-LFA implementation 
+    to gather all the required path attributes along each link on the 
+    entire Remote-LFA alternate path.</t>
 
     <t>With current LFA <xref target="RFC5286"/> and Remote-LFA
-    implementation, SPF (and reverse SPF) is run with the computing router
-    and its immediate 1-hop routers as the root. This allows
-    computation of path attributes (e.g. SRLG, Admin-groups)
-    for the first path segment. However, the computing
-    router is unable to gather any path attributes
-    for the second path segment (i.e. from the PQ-node to destination).
-    Consecutively any policy-based selection
-    of backup paths will consider only the path attributes
-    from the computing router up until the PQ-node.</t>
+    implementations, the forward SPF (and reverse SPF) is run on the 
+    computing router and its immediate 1-hop routers as the roots. 
+    While that enables computation of path attributes (e.g. SRLG, 
+    Admin-groups) first alternate path segment from the computing router  
+    PQ-node, there is no means for the computing router to gather 
+    any path attributes for the path segment from the PQ-node to 
+    destination. Consecutively any policy-based selection of alternate 
+    paths will consider only the path attributes from the computing 
+    router up until the PQ-node.</t>
 
-    <t> This document describes a procedure for both
-    guaranteeing node-protection with Remote-LFA, as well as, collection
-    of complete path attributes (needed to facilitate policy-based backup
-    path selection) for backup paths obtained with Remote-LFA.</t>
+    <t> This document describes a procedure for determining node-protection 
+    with Remote-LFA. The same procedure are also extended for collection 
+    of complete set of path attributes, enabling more accurate policy-based 
+    selection for alternate paths obtained with Remote-LFA.</t>
   </section>
 
   <section title="Node Protection with Remote-LFA">
@@ -160,11 +166,11 @@
         </figure>
 
       <t>In the above topology, for all (non-ECMP) destinations reachable via 
-      the S-E link there is no standard LFA backup. As per the 
-      <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> backup 
+      the S-E link there is no standard LFA alternate. As per the 
+      <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> alternate 
       specifications node C being the PQ-node for the S-E link provides
       nexthop for all the above destinations. <xref target="table1"/> 
-      below, shows all possible primary and Remote-LFA backup paths for each
+      below, shows all possible primary and Remote-LFA alternate paths for each
       destination.</t>
 
       <texttable anchor="table1" title="Table 1: Backup paths with Remote-LFA">
@@ -173,22 +179,22 @@
         <ttcol align="left">Remote-LFA Backup Path</ttcol>
         <c>D</c>
         <c>S->E->D</c>
-        <c>S->A->B->C->D</c>
+        <c>S=>A=>B=>C->D</c>
         <c>E</c>
         <c>S->E</c>
-        <c>S->A->B->C->D->E</c>
+        <c>S=>A=>B=>C->D->E</c>
         <c>F</c>
         <c>S->E->F</c>
-        <c>S->A->B->C->D->E->F</c>
+        <c>S=>A=>B=>C->D->E->F</c>
         <c>G</c>
         <c>S->E->D->G</c>
-        <c>S->A->B->C->D->G</c>
+        <c>S=>A=>B=>C->D->G</c>
       </texttable>
 
       <t>A closer look at <xref target="table1"/> shows that, while the 
       PQ-node C provides link-protection for all the destinations, it does
       not provide node-protection for destinations E and F. In the event of
-      the node-failure on primary nexthop E, the backup path from Remote-LFA
+      the node-failure on primary nexthop E, the alternate path from Remote-LFA
       nexthop C to E and F also becomes unavailable. So for a Remote-LFA
       nexthop to provide node-protection for a given destination, it is
       mandatory that, the shortest path from the given PQ-node to the given
@@ -199,15 +205,15 @@
       <t>This document proposes an additional forward SPF
       computation for each of the PQ-nodes,
       as a mechanism to provide node-protection with remote
-      LFA. In case, a backup selection policy has been configured, the
+      LFA. In case, a alternate selection policy has been configured, the
       mechanism proposed, shall also provide a means to collect complete
-      path attributes for the backup path via a Remote-LFA nexthop to a
+      path attributes for the alternate path via a Remote-LFA nexthop to a
       given destination.</t>
 
       <t>The additional forward SPF computation for each PQ-node, shall 
       help determine, if a given primary nexthop node is on shortest paths 
       from a given PQ-node to any given destination or not. To determine 
-      if a given PQ-node provides node-protecting backup for a given 
+      if a given PQ-node provides node-protecting alternate for a given 
       destination, the primary nexthop node should not be on any of the 
       shortest paths from the given PQ-node to the given destination.</t>
 
@@ -221,7 +227,7 @@
       on the PQ-node, for the given destination, should be inspected. In case 
       the list contains the primary nexthop node, the PQ-node does not 
       provide node-protection. Else, the PQ-node guarantees node-protecting 
-      backup for the given destination. Below is an illustration of the 
+      alternate for the given destination. Below is an illustration of the 
       mechanism with the topology in <xref target="ring-topology"/>.</t>
 
       <texttable anchor="table2" title="Table 2: Types of protection with Remote-LFA">
@@ -257,15 +263,16 @@
       primary nexthop E is in the shortest path from C to E and F.</t>
 
       <t>Alternatively, an implementation may also run the node-protection 
-      in-equality from the LFA <xref target="RFC5286"/> specification with 
+      condition from the LFA <xref target="RFC5286"/> specification with 
       slight modification as shown in <xref target="node-prot-ineq"/> 
-      below. PQ-nodes that does not qualify the inequality for a given 
-      destination, does not gaurantee node-protection for the destination.</t>
+      below. PQ-nodes that does not qualify the condition for a given 
+      destination, does not gaurantee node-protection for the same.</t>
 
-      <figure anchor="node-prot-ineq" title="Figure 2: Node-Protection Inequality for Remote-LFA">
+      <figure anchor="node-prot-ineq" 
+       title="Figure 2: Node-Protection Condition for Remote-LFA">
         <artwork>
 
-        Dist_opt(Npq, Dst) &lt; Dist_opt(Npq, Np) + Dist_opt(Np, Dst)
+   Distance_opt(Npq, Dst) &lt; Distance_opt(Npq, Np) + Distance_opt(Np, Dst)
 
         - Npq : The PQ-node being considered
         - Dst : The destination being protected
@@ -276,11 +283,11 @@
       </figure>
 
       <t> With reference to the topology in <xref target="ring-topology"/>, 
-      <xref target="table3"/> below shows how the above inequality can 
+      <xref target="table3"/> below shows how the above condition can 
       be used to determine node-protection with a PQ-node.</t>
 
       <texttable anchor="table3" 
-       title="Table 3: Using Node-protecting inequality for Remote-LFA">
+       title="Table 3: Using Node-protecting condition for Remote-LFA">
         <ttcol align="center">Destination (Dst)</ttcol>
         <ttcol align="center">Primary-NH (Np)</ttcol>
         <ttcol align="center">PQ-node (Npq)</ttcol>
@@ -323,46 +330,56 @@
       while C is a node-protecting Remote-LFA nexthop for D and G, 
       it is not so for E and F.</t>
 
+      <t>The procedure described in this document helps no more than to  
+      determine whether a given Remote-LFA alternate provides node-protection 
+      for a given destination or not. It does not find out any new Remote-LFA 
+      alternate nexthops, outside the ones already computed by standard 
+      Remote-LFA procedure. However, in case of availability of more than one 
+      PQ-node (Remote-LFA alternates) for a destination, and node-protection 
+      is required for the given primary nexthop, this procedure will eliminate 
+      the PQ-nodes that do not provide node-protection and choose only the ones  
+      that gaurantee node-protection. 
+      </t> 
+
     </section>
   </section>
 
-  <section title="Facilitating Manageabilty of Remote-LFA Backup Paths">
+  <section title="Manageabilty of Remote-LFA Alternate Paths">
     <section title="The Problem">
       <t>With the regular Remote-LFA
       functionality the computing router may compute more than one PQ-node
-      as usable Remote-LFA backup nexthops. Additionally a backup selection
+      as usable Remote-LFA alternate nexthops. Additionally a alternate selection
       policy may be configured to enable the network operator to choose one
-      of them as the most appropriate Remote-LFA nexthop. For such back
-      selection policy to run, all the relevant path attributes for each of
-      the backup paths (one through each of the PQ-nodes), will need to be
-      collected. The Remote-LFA backup path via a given PQ-node to a given
+      of them as the most appropriate Remote-LFA alternate. For such policy-based 
+      alternate selection to run, all the relevant path characteristics for each 
+      the alternate paths (one through each of the PQ-nodes), needs to be
+      collected. The Remote-LFA alternate path through a given PQ-node to a given
       destination comprises of two path segments as follows.</t>
       <t><list style="numbers">
 	<t>Path segment from the computing router to the
-	PQ-node (Remote-LFA backup nexthop), and</t>
+	PQ-node (Remote-LFA alternate nexthop), and</t>
 	<t>Path segment from the PQ-node to the destination
-	we are trying to protect. </t>
+	being protected. </t>
       </list></t>
 
       <t>The first Path segment can be calculated from the regular
-      forward SPF done as part of standard and remote LFA
-      computations. However without the mechanism proposed in this
-      invention, there is no way to determine the path attributes for
-      the second path segment. In the absence of the path attributes
-      for the second path segment, two Remote-LFA backup path may be
-      evaluated only based on the first path segments attributes,
-      although the second path segment attributes may be different.</t>
+      forward SPF done as part of standard and remote LFA computations. 
+      However without the mechanism proposed in this document, there is 
+      no way to determine the path characteristics for the second path 
+      segment. In the absence of the path characteristics for the second 
+      path segment, two Remote-LFA alternate path may be equally preferred 
+      based on the first path segments characteristics only, although the 
+      second path segment attributes may be different.</t>
     </section>
 
     <section title="The Solution">
-      <t>The additional forward SPF computation being proposed in this document
-      shall also collect links, nodes and path attributes along the
-      second path segment.
-      This shall enable collection of complete path attributes for a
-      given Remote-LFA backup path to a given destination. The complete
-      backup path attributes shall then facilitate more appropriate
-      backup path selection while running the backup
-      selection policy.</t>
+      <t>The additional forward SPF computation being proposed in this 
+      document shall also collect links, nodes and path characteristics 
+      along the second path segment. This shall enable collection of 
+      complete path characteristics for a given Remote-LFA alternate 
+      path to a given destination. The complete alternate path characteristics 
+      shall then facilitate more accurate alternate path selection while 
+      running the alternate selection policy.</t>
     </section>
   </section>
 
@@ -384,23 +401,23 @@
       <t><list style="symbols"> <t>The recent Remote-LFA
       node-protection document
       <xref target="I-D.litkowski-rtgwg-node-protect-remote-lfa"/>
-      proposes an extra reverse SPF computation for each nextnexthop of the computing
-      router. The mechanism in this document proposes an extra forward SPF
-      for each of the PQ-nodes. Considering some of the standard IGP network
-      topologies in real-life service-provider deployments, the number of
-      nextnexthops will be substantially higher than the number of PQ-nodes
-      discovered in those topologies. Hence the number of additional SPFs
-      required in the proposed mechanism in this invention disclosure will
-      be considerably less than compared to the procedures outlined in
+      proposes an extra reverse SPF computation for each nextnexthop of the 
+      computing router. The mechanism in this document proposes an extra 
+      forward SPF for each of the PQ-nodes. Considering some of the standard 
+      IGP network topologies in real-life service-provider deployments, the 
+      number of nextnexthops will be substantially higher than the number of 
+      PQ-nodes discovered in those topologies. Hence the number of additional 
+      SPFs required in the proposed mechanism in this document will be 
+      considerably less compared to the procedures outlined in
       <xref target="I-D.litkowski-rtgwg-node-protect-remote-lfa"/>,
-      and hence imply less computing overhead.</t>
+      and imply less computational overhead.</t>
       
-      <t>Also the extra reverse SPF proposed per nextnexthop
-      in Remote-LFA node-protection specification
-      <xref target="I-D.litkowski-rtgwg-node-protect-remote-lfa"/> does not provide
-      a means to collect the path attributes for the backup path segment
-      from the PQ-node to a given destination. The additional forward SPF
-      for each PQ-node, as proposed in this document facilitates this.</t>
+      <t>Also the extra reverse SPF proposed per nextnexthop in 
+      <xref target="I-D.litkowski-rtgwg-node-protect-remote-lfa"> 
+      Remote-LFA node-protection</xref>  specification does not provide a means 
+      to collect the path characteristics for the alternate path segment from 
+      the PQ-node to the destination. The additional forward SPF for each 
+      PQ-node, as proposed in this document facilitates the same.</t>
       </list></t>
     </section>
   </section>
@@ -430,7 +447,7 @@
     <references title="Informative References">
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5286.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-rtgwg-remote-lfa-02.xml"?>
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-litkowski-rtgwg-lfa-manageability-01.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-rtgwg-lfa-manageability-00.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-litkowski-rtgwg-node-protect-remote-lfa-00.xml"?>
     </references>
   </back>
