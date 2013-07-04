@@ -10,12 +10,12 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection" ipr="trust200902">
+<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-00" ipr="trust200902">
 
   <!-- ***** FRONT MATTER ***** -->
 
   <front>
-    <title>Node Protection and Manageability for Remote-LFA</title>
+    <title>Node Protecting Remote-LFA and Policy</title>
 
     <!-- add 'role="editor"' below for the editors if appropriate -->
 
