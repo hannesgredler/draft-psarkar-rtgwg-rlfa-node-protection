@@ -22,55 +22,55 @@
     <author initials="P." surname="Sarkar" fullname="Pushpasis Sarkar" role="editor">
       <organization>Juniper Networks, Inc.</organization>
       <address>
-	<postal>
-	  <street>Electra, Exora Business Park</street>
-	  <city>Bangalore</city>
-	  <region>KA</region>
-	  <code>560103</code>
-	  <country>India</country>
-	</postal>
-	<email>psarkar@juniper.net</email>
+      <postal>
+      <street>Electra, Exora Business Park</street>
+      <city>Bangalore</city>
+      <region>KA</region>
+      <code>560103</code>
+      <country>India</country>
+      </postal>
+      <email>psarkar@juniper.net</email>
       </address>
     </author>
 
     <author fullname="Hannes Gredler" initials="H." surname="Gredler">
       <organization>Juniper Networks, Inc.</organization>
       <address>
-	<postal>
-	  <street>1194 N. Mathilda Ave.</street>
-	  <city>Sunnyvale</city>
-	  <region>CA</region>
-	  <code>94089</code>
-	  <country>US</country>
-	</postal>
-	<email>hannes@juniper.net</email>
+      <postal>
+      <street>1194 N. Mathilda Ave.</street>
+      <city>Sunnyvale</city>
+      <region>CA</region>
+      <code>94089</code>
+      <country>US</country>
+      </postal>
+      <email>hannes@juniper.net</email>
       </address>
     </author>
 
     <author initials="S." surname="Hegde" fullname="Shraddha Hegde">
       <organization>Juniper Networks, Inc.</organization>
       <address>
-	<postal>
-	  <street>Electra, Exora Business Park</street>
-	  <city>Bangalore</city>
-	  <region>KA</region>
-	  <code>560103</code>
-	  <country>India</country>
-	</postal>
-	<email>shraddha@juniper.net</email>
+      <postal>
+      <street>Electra, Exora Business Park</street>
+      <city>Bangalore</city>
+      <region>KA</region>
+      <code>560103</code>
+      <country>India</country>
+      </postal>
+      <email>shraddha@juniper.net</email>
       </address>
     </author>
     <author initials="H." surname="Raghuveer" fullname="Harish Raghuveer">
       <organization>Juniper Networks, Inc.</organization>
       <address>
-	<postal>
-	  <street>Electra, Exora Business Park</street>
-	  <city>Bangalore</city>
-	  <region>KA</region>
-	  <code>560103</code>
-	  <country>India</country>
-	</postal>
-	<email>hraghuveer@juniper.net</email>
+      <postal>
+      <street>Electra, Exora Business Park</street>
+      <city>Bangalore</city>
+      <region>KA</region>
+      <code>560103</code>
+      <country>India</country>
+      </postal>
+      <email>hraghuveer@juniper.net</email>
       </address>
     </author>
 
@@ -80,6 +80,7 @@
 
     <workgroup>Routing Area Working Group</workgroup>
 
+    <keyword>LFA</keyword>
     <keyword>Remote-LFA</keyword>
     <keyword>IGP</keyword>
     <keyword>Node Protection</keyword>
@@ -98,9 +99,9 @@
       document are to be interpreted as described in <xref
       target="RFC2119">RFC2119</xref>.</t>
     </note>
-</front>
+  </front>
 
-<middle>
+  <middle>
   <section title="Introduction">
     <t>The current <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
     specification only provides procedures for link-protection.
@@ -118,8 +119,8 @@
     nexthop comprises two segments:</t>
 
     <t><list style="numbers">
-      <t>a segment from the computing router to the PQ-node,</t>
-      <t>a segment from the PQ-node to the destination node</t>
+      <t>The path segment from computing router to the PQ-node, and</t>
+      <t>The path segment from PQ-node to the destination node</t>
     </list></t>
 
     <t>With current LFA <xref target="RFC5286"/> and Remote-LFA
@@ -139,7 +140,7 @@
     path selection) for backup paths obtained with Remote-LFA.</t>
   </section>
 
-    <section title="Node Protection with Remote-LFA">
+  <section title="Node Protection with Remote-LFA">
     <section title="The Problem">
       <t>To better illustrate the problem and the solution proposed in
       this document the following topology diagram from the
@@ -147,7 +148,8 @@
       draft is being re-used with slight modification.</t>
 
         <figure anchor="ring-topology" title="Sample Ring Topology">
-	    <artwork>
+	  <artwork>
+
                             F
                            /
                       S-x-E
@@ -155,45 +157,46 @@
                     A       D--G
                      \     /
                       B---C
-	    </artwork>
+
+	  </artwork>
         </figure>
 
-	<t>In the above topology, for all (non-ECMP) destinations
-	reachable via the S-E link there is no standard LFA backup. As per the
-	<xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
-	specifications node C being the PQ-node for the S-E link provides
-	backup nexthop for all the above destinations.
-	<xref target="backup-path-table"/>, shows
-	all possible primary and Remote-LFA backup paths for each
-	destination.</t>
+      <t>In the above topology, for all (non-ECMP) destinations
+      reachable via the S-E link there is no standard LFA backup. As per the
+      <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
+      specifications node C being the PQ-node for the S-E link provides
+      backup nexthop for all the above destinations.
+      <xref target="backup-path-table"/> below, shows
+      all possible primary and Remote-LFA backup paths for each
+      destination.</t>
 
-	<texttable anchor="backup-path-table" title="Backup paths with Remote-LFA">
-	  <ttcol align="left">Destination</ttcol>
-	  <ttcol align="left">Primary Path</ttcol>
-	  <ttcol align="left">Remote-LFA Backup Path</ttcol>
-	  <c>D</c>
-	  <c>S->E->D</c>
-	  <c>S->A->B->C->D</c>
-	  <c>E</c>
-	  <c>S->E</c>
-	  <c>S->A->B->C->D->E</c>
-	  <c>F</c>
-	  <c>S->E->F</c>
-	  <c>S->A->B->C->D->E->F</c>
-	  <c>G</c>
-	  <c>S->E->D->G</c>
-	  <c>S->A->B->C->D->G</c>
-	</texttable>
+      <texttable anchor="backup-path-table" title="Backup paths with Remote-LFA">
+        <ttcol align="left">Destination</ttcol>
+        <ttcol align="left">Primary Path</ttcol>
+        <ttcol align="left">Remote-LFA Backup Path</ttcol>
+        <c>D</c>
+        <c>S->E->D</c>
+        <c>S->A->B->C->D</c>
+        <c>E</c>
+        <c>S->E</c>
+        <c>S->A->B->C->D->E</c>
+        <c>F</c>
+        <c>S->E->F</c>
+        <c>S->A->B->C->D->E->F</c>
+        <c>G</c>
+        <c>S->E->D->G</c>
+        <c>S->A->B->C->D->G</c>
+      </texttable>
 
-	<t>A closer look at <xref target="backup-path-table"/>
-	shows that, while the
-	PQ-node C provides link-protection for all the destinations, it does
-	not provide node-protection for destinations E and F. In the event of
-	the node-failure on primary nexthop E, the backup path from Remote-LFA
-	nexthop C to E and F also becomes unavailable. So for a Remote-LFA
-	nexthop to provide node-protection for a given destination, it is
-	mandatory that, the shortest path from the given PQ-node to the given
-	destination must not traverse the primary nexthop. </t>
+      <t>A closer look at <xref target="backup-path-table"/>
+      shows that, while the
+      PQ-node C provides link-protection for all the destinations, it does
+      not provide node-protection for destinations E and F. In the event of
+      the node-failure on primary nexthop E, the backup path from Remote-LFA
+      nexthop C to E and F also becomes unavailable. So for a Remote-LFA
+      nexthop to provide node-protection for a given destination, it is
+      mandatory that, the shortest path from the given PQ-node to the given
+      destination must not traverse the primary nexthop. </t>
     </section>
 
     <section title="The Solution">
@@ -218,37 +221,37 @@
       illustration of the mechanism with the topology in
       <xref target="ring-topology"/></t>
 
-	<texttable anchor="table2" title="Types of protection with Remote-LFA">
-	    <ttcol align="left">Destination</ttcol>
-	    <ttcol align="left">PQ-node</ttcol>
-	    <ttcol align="left">Shortest Path(PQ-node to Dest)</ttcol>
-	    <ttcol align="left">Link-Protection</ttcol>
-	    <ttcol align="left">Node-Protection</ttcol>
-	    <c>D</c>
-	    <c>C</c>
-	    <c>C->D</c>
-	    <c>Yes</c>
-	    <c>Yes</c>
-	    <c>E</c>
-	    <c>C</c>
-	    <c>C->D->E</c>
-	    <c>Yes</c>
-	    <c>No</c>
-	    <c>F</c>
-	    <c>C</c>
-	    <c>C->D->E->F</c>
-	    <c>Yes</c>
-	    <c>No</c>
-	    <c>G</c>
-	    <c>C</c>
-	    <c>C->D->G</c>
-	    <c>Yes</c>
-	    <c>Yes</c>
-	</texttable>
+      <texttable anchor="table2" title="Types of protection with Remote-LFA">
+        <ttcol align="left">Destination</ttcol>
+        <ttcol align="left">PQ-node</ttcol>
+        <ttcol align="left">Shortest Path(PQ-node to Dest)</ttcol>
+        <ttcol align="left">Link-Protection</ttcol>
+        <ttcol align="left">Node-Protection</ttcol>
+        <c>D</c>
+        <c>C</c>
+        <c>C->D</c>
+        <c>Yes</c>
+        <c>Yes</c>
+        <c>E</c>
+        <c>C</c>
+        <c>C->D->E</c>
+        <c>Yes</c>
+        <c>No</c>
+        <c>F</c>
+        <c>C</c>
+        <c>C->D->E->F</c>
+        <c>Yes</c>
+        <c>No</c>
+        <c>G</c>
+        <c>C</c>
+        <c>C->D->G</c>
+        <c>Yes</c>
+        <c>Yes</c>
+      </texttable>
 
-	<t>As seen in the above example while C is node-protecting
-	Remote-LFA nexthop for D and G, it is not so for E and F, since the
-	primary nexthop E is in the shortest path from C to E and F.</t>
+      <t>As seen in the above example while C is node-protecting
+      Remote-LFA nexthop for D and G, it is not so for E and F, since the
+      primary nexthop E is in the shortest path from C to E and F.</t>
 
     </section>
   </section>
@@ -265,10 +268,8 @@
       collected. The Remote-LFA backup path via a given PQ-node to a given
       destination comprises of two path segments as follows.</t>
       <t><list style="numbers">
-
 	<t>Path segment from the computing router to the
 	PQ-node (Remote-LFA backup nexthop), and</t>
-
 	<t>Path segment from the PQ-node to the destination
 	we are trying to protect. </t>
       </list></t>
@@ -334,28 +335,24 @@
     </section>
   </section>
 
-    <section anchor="Acknowledgements" title="Acknowledgements">
+  <section anchor="Acknowledgements" title="Acknowledgements">
       <t></t>
-    </section>
+  </section>
 
-    <section anchor="IANA" title="IANA Considerations">
-      <t>
-	N/A. - No protocol changes are proposed in this document.
-      </t>
+  <section anchor="IANA" title="IANA Considerations">
+    <t>N/A. - No protocol changes are proposed in this document.</t>
+  </section>
 
-    </section>
-
-    <section anchor="Security" title="Security Considerations">
-      <t>This document does not introduce any change in any of the
-      protocol specifications. It simply proposes to run an extra SPF rooted
-      on each PQ-node discovered in the whole network.</t>
-    </section>
+  <section anchor="Security" title="Security Considerations">
+    <t>This document does not introduce any change in any of the
+    protocol specifications. It simply proposes to run an extra SPF rooted
+    on each PQ-node discovered in the whole network.</t>
+  </section>
   </middle>
 
-  <!--  *****BACK MATTER ***** -->
+  <!-- *****BACK MATTER ***** -->
 
   <back>
-
     <references title="Normative References">
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
     </references>
@@ -366,6 +363,5 @@
       <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-litkowski-rtgwg-lfa-manageability-01.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-litkowski-rtgwg-node-protect-remote-lfa-00.xml"?>
     </references>
-
   </back>
 </rfc>
