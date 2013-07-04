@@ -285,8 +285,8 @@
 
   <section title="Prior Solutions">
     <t>A recent <xref
-    target="I-D.litkowski-rtgwg-node-protect-remote-lfa">Node Protecting
-    Remote-LFA</xref>Remote-LFA specification proposes a solution for
+    target="I-D.litkowski-rtgwg-node-protect-remote-lfa">
+    Node Protecting Remote-LFA</xref> draft proposes a solution for
     providing node-protection with Remote-LFA. But it requires the
     computing router to additionally run reverse SPFs rooted at the
     nextnexthop routers (i.e. all the 2-hop-away routers) as well. A
@@ -299,8 +299,8 @@
       document.</t>
       <t><list style="symbols"> <t>The recent Remote-LFA
       node-protection specification
-      [I-D. draft-litkowski-rtgwg-node-protect-remote-lfa] proposes an extra
-      reverse SPF computation for each nextnexthops of the computing
+      <xref target="I-D.litkowski-rtgwg-node-protect-remote-lfa"/>
+      proposes an extra reverse SPF computation for each nextnexthops of the computing
       router. The mechanism in this document proposes an extra forward SPF
       for each of the PQ-node. Considering some of the standard IGP network
       topologies in real-life service-provider deployments, the number of
@@ -313,7 +313,7 @@
       
       <t>Also the extra reverse SPF proposed per nextnexthops
       in Remote-LFA node-protection specification
-      [[I-D. draft-litkowski-rtgwg-node-protect-remote-lfa] does not provide
+      <xref target="I-D.litkowski-rtgwg-node-protect-remote-lfa"/> does not provide
       a means to collect the path attributes for the backup path segment
       from the PQ-node to a given destination. The additional forward SPF
       for each PQ-node, as proposed in this invention disclosure facilitates
