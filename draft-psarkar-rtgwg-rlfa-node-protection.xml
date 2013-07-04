@@ -147,9 +147,8 @@
       <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>,
       draft is being re-used with slight modification.</t>
 
-        <figure anchor="ring-topology" title="Sample Ring Topology">
+        <figure anchor="ring-topology" title="Figure 1: Sample Ring Topology">
 	  <artwork>
-
                             F
                            /
                       S-x-E
@@ -157,20 +156,18 @@
                     A       D--G
                      \     /
                       B---C
-
 	  </artwork>
         </figure>
 
-      <t>In the above topology, for all (non-ECMP) destinations
-      reachable via the S-E link there is no standard LFA backup. As per the
-      <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
+      <t>In the above topology, for all (non-ECMP) destinations reachable via 
+      the S-E link there is no standard LFA backup. As per the 
+      <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> backup 
       specifications node C being the PQ-node for the S-E link provides
-      backup nexthop for all the above destinations.
-      <xref target="backup-path-table"/> below, shows
-      all possible primary and Remote-LFA backup paths for each
+      nexthop for all the above destinations. <xref target="table1"/> 
+      below, shows all possible primary and Remote-LFA backup paths for each
       destination.</t>
 
-      <texttable anchor="backup-path-table" title="Backup paths with Remote-LFA">
+      <texttable anchor="table1" title="Table 1: Backup paths with Remote-LFA">
         <ttcol align="left">Destination</ttcol>
         <ttcol align="left">Primary Path</ttcol>
         <ttcol align="left">Remote-LFA Backup Path</ttcol>
@@ -188,8 +185,7 @@
         <c>S->A->B->C->D->G</c>
       </texttable>
 
-      <t>A closer look at <xref target="backup-path-table"/>
-      shows that, while the
+      <t>A closer look at <xref target="table1"/> shows that, while the 
       PQ-node C provides link-protection for all the destinations, it does
       not provide node-protection for destinations E and F. In the event of
       the node-failure on primary nexthop E, the backup path from Remote-LFA
@@ -228,7 +224,7 @@
       backup for the given destination. Below is an illustration of the 
       mechanism with the topology in <xref target="ring-topology"/>.</t>
 
-      <texttable anchor="table2" title="Types of protection with Remote-LFA">
+      <texttable anchor="table2" title="Table 2: Types of protection with Remote-LFA">
         <ttcol align="left">Destination</ttcol>
         <ttcol align="left">PQ-node</ttcol>
         <ttcol align="left">Shortest Path(PQ-node to Dest)</ttcol>
@@ -266,7 +262,7 @@
       below. PQ-nodes that does not qualify the inequality for a given 
       destination, does not gaurantee node-protection for the destination.</t>
 
-      <figure anchor="node-prot-ineq" title="Node-Protection Inequality for Remote-LFA">
+      <figure anchor="node-prot-ineq" title="Figure 2: Node-Protection Inequality for Remote-LFA">
         <artwork>
 
         Dist_opt(Npq, Dst) &lt; Dist_opt(Npq, Np) + Dist_opt(Np, Dst)
@@ -281,17 +277,17 @@
 
       <t> With reference to the topology in <xref target="ring-topology"/>, 
       <xref target="table3"/> below shows how the above inequality can 
-      be used to deter node-protection with a PQ-node.</t>
+      be used to determine node-protection with a PQ-node.</t>
 
       <texttable anchor="table3" 
-       title="Using Node-protecting inequality for Remote-LFA">
-        <ttcol align="left">Destination (Dst)</ttcol>
-        <ttcol align="left">Primary-NH (Np)</ttcol>
-        <ttcol align="left">PQ-node (Npq)</ttcol>
-        <ttcol align="left">D_opt (Npq, Dst)</ttcol>
-        <ttcol align="left">D_opt (Npq, Np)</ttcol>
-        <ttcol align="left">D_opt (Np, Dst)</ttcol>
-        <ttcol align="left">Cond. Met</ttcol>
+       title="Table 3: Using Node-protecting inequality for Remote-LFA">
+        <ttcol align="center">Destination (Dst)</ttcol>
+        <ttcol align="center">Primary-NH (Np)</ttcol>
+        <ttcol align="center">PQ-node (Npq)</ttcol>
+        <ttcol align="center">D_opt (Npq, Dst)</ttcol>
+        <ttcol align="center">D_opt (Npq, Np)</ttcol>
+        <ttcol align="center">D_opt (Np, Dst)</ttcol>
+        <ttcol align="center">Condition Met</ttcol>
         <c>D</c>
         <c>E</c>
         <c>C</c>
