@@ -208,18 +208,25 @@
       path attributes for the backup path via a Remote-LFA nexthop to a
       given destination.</t>
 
-      <t>The additional forward SPF computation for
-      each PQ-node, shall produce a list of links and
-      nodes traversed on shortest paths from a given PQ-node to each of the
-      destination in the whole network. To determine if a given PQ-node
-      provides node-protecting backup for a given destination, the list of
-      links and nodes from the given PQ-node to the given destination shall
-      be inspected. In case the list contains the primary nexthop neighbor, the
-      PQ-node does not provide node-protection. However, if the primary
-      nexthop is not present in the list, the PQ-node guarantees
-      node-protecting backup for the given destination. Below is an
-      illustration of the mechanism with the topology in
-      <xref target="ring-topology"/></t>
+      <t>The additional forward SPF computation for each PQ-node, shall 
+      help determine, if a given primary nexthop node is on shortest paths 
+      from a given PQ-node to any given destination or not. To determine 
+      if a given PQ-node provides node-protecting backup for a given 
+      destination, the primary nexthop node should not be on any of the 
+      shortest paths from the given PQ-node to the given destination.</t>
+
+      <t>Some SPF implementations may produce a list of links and nodes 
+      traversed on the shortest path(s) from a given root to others. In such 
+      implementations, running a forward SPF rooted at a given PQ-node will 
+      produce a list of nodes (one per each destination), on one or more  
+      shortest path(s) from the PQ-node to other destinations in the network. 
+      To determine whether a PQ-node provides node-protection for a given 
+      destination or not, the list of nodes computed from forward SPF run 
+      on the PQ-node, for the given destination, should be inspected. In case 
+      the list contains the primary nexthop node, the PQ-node does not 
+      provide node-protection. Else, the PQ-node guarantees node-protecting 
+      backup for the given destination. Below is an illustration of the 
+      mechanism with the topology in <xref target="ring-topology"/>.</t>
 
       <texttable anchor="table2" title="Types of protection with Remote-LFA">
         <ttcol align="left">Destination</ttcol>
@@ -252,6 +259,73 @@
       <t>As seen in the above example while C is node-protecting
       Remote-LFA nexthop for D and G, it is not so for E and F, since the
       primary nexthop E is in the shortest path from C to E and F.</t>
+
+      <t>Alternatively, an implementation may also run the node-protection 
+      in-equality from the LFA <xref target="RFC5286"/> specification with 
+      slight modification as shown in <xref target="node-prot-ineq"/> 
+      below. PQ-nodes that does not qualify the inequality for a given 
+      destination, does not gaurantee node-protection for the destination.</t>
+
+      <figure anchor="node-prot-ineq" title="Node-Protection Inequality for Remote-LFA">
+        <artwork>
+
+        Dist_opt(Npq, Dst) &lt; Dist_opt(Npq, Np) + Dist_opt(Np, Dst)
+
+        - Npq : The PQ-node being considered
+        - Dst : The destination being protected
+        - Np  : The primary nexthop node on shortest path 
+                from computing router to destination
+        
+        </artwork>
+      </figure>
+
+      <t> With reference to the topology in <xref target="ring-topology"/>, 
+      <xref target="table3"/> below shows how the above inequality can 
+      be used to deter node-protection with a PQ-node.</t>
+
+      <texttable anchor="table3" 
+       title="Using Node-protecting inequality for Remote-LFA">
+        <ttcol align="left">Destination (Dst)</ttcol>
+        <ttcol align="left">Primary-NH (Np)</ttcol>
+        <ttcol align="left">PQ-node (Npq)</ttcol>
+        <ttcol align="left">D_opt (Npq, Dst)</ttcol>
+        <ttcol align="left">D_opt (Npq, Np)</ttcol>
+        <ttcol align="left">D_opt (Np, Dst)</ttcol>
+        <ttcol align="left">Cond. Met</ttcol>
+        <c>D</c>
+        <c>E</c>
+        <c>C</c>
+        <c>1</c>
+        <c>1</c>
+        <c>1</c>
+        <c>Yes</c>
+        <c>E</c>
+        <c>E</c>
+        <c>C</c>
+        <c>2</c>
+        <c>2</c>
+        <c>0</c>
+        <c>No</c>
+        <c>F</c>
+        <c>E</c>
+        <c>C</c>
+        <c>3</c>
+        <c>2</c>
+        <c>1</c>
+        <c>No</c>
+        <c>G</c>
+        <c>E</c>
+        <c>C</c>
+        <c>2</c>
+        <c>2</c>
+        <c>1</c>
+        <c>Yes</c>
+      </texttable>
+
+      <t>As seen in the above example above, C does not meet the node-
+      protecting inequality for destination E, and F. And so, once again, 
+      while C is a node-protecting Remote-LFA nexthop for D and G, 
+      it is not so for E and F.</t>
 
     </section>
   </section>
