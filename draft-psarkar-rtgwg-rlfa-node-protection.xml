@@ -122,11 +122,11 @@
 
     <t>Also, the <xref target="I-D.ietf-rtgwg-lfa-manageability">
     LFA Manageability</xref> document, requires a computing router to 
-    find all possible (includin all possible Remote-LFA) alternate nexthops, 
-    collect the complete set of path attributes for each alternate path,  
+    find all possible (including all possible Remote-LFA) alternate nexthops, 
+    collect the complete set of path characteristics for each alternate path,  
     run a alternate-selection policy (configured by the operator), and find 
     the best alternate path. This will require the Remote-LFA implementation 
-    to gather all the required path attributes along each link on the 
+    to gather all the required path characteristics along each link on the 
     entire Remote-LFA alternate path.</t>
 
     <t>With current LFA <xref target="RFC5286"/> and Remote-LFA
@@ -338,8 +338,7 @@
       PQ-node (Remote-LFA alternates) for a destination, and node-protection 
       is required for the given primary nexthop, this procedure will eliminate 
       the PQ-nodes that do not provide node-protection and choose only the ones  
-      that gaurantee node-protection. 
-      </t> 
+      that does.</t> 
 
     </section>
   </section>
