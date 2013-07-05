@@ -15,7 +15,7 @@
   <!-- ***** FRONT MATTER ***** -->
 
   <front>
-    <title>Node Protecting Remote-LFA and Policy</title>
+    <title>Node Protecting Remote-LFA and Manageability</title>
 
     <!-- add 'role="editor"' below for the editors if appropriate -->
 
@@ -86,12 +86,11 @@
     <keyword>Node Protection</keyword>
 
     <abstract>
-      <t>The alternate alternates computed following the current 
+      <t>The loop-free alternates computed following the current 
       <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
       specification gaurantees only link-protection. The resulting 
-      Remote-LFA alternate nexthops (also called PQ-nodes), may not 
-      gaurantee node-protection for all destinations being protected 
-      by it.</t>
+      Remote-LFA nexthops (also called PQ-nodes), may not gaurantee 
+      node-protection for all destinations being protected by it.</t>
 
       <t>This document describes procedures for determining if a given 
       PQ-node provides node-protection for a specific destination or 
@@ -282,9 +281,13 @@
         </artwork>
       </figure>
 
-      <t> With reference to the topology in <xref target="ring-topology"/>, 
-      <xref target="table3"/> below shows how the above condition can 
-      be used to determine node-protection with a PQ-node.</t>
+      <t>All of the above metric costs except Distance_opt(Npq, Dst), can be obtained 
+      with forward and reverse SPFs with Np(the primary nexthop) as the root, run as 
+      part of the regular LFA and Remote-LFA implementation. The Distance_opt(Npq, Dst) 
+      metric can only be determined by the additional forward SPF run with Npq(PQ-node) 
+      as the root. With reference to the topology in <xref target="ring-topology"/>, 
+      <xref target="table3"/> below shows how the above condition can be used 
+      to determine node-protection with a PQ-node.</t>
 
       <texttable anchor="table3" 
        title="Table 3: Using Node-protecting condition for Remote-LFA">
