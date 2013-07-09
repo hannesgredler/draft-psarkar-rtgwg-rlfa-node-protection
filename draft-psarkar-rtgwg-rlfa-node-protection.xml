@@ -425,7 +425,8 @@
   </section>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
-      <t></t>
+    <t>Many thanks to Bruno Decraene and Stephane Litkowski for their useful 
+    comments.</t> 
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
