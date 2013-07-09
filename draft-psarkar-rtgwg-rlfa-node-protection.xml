@@ -152,15 +152,15 @@
       <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>,
       draft is being re-used with slight modification.</t>
 
-        <figure anchor="ring-topology" title="Figure 1: Sample Ring Topology">
+        <figure anchor="ring-topology" title="Sample Ring Topology">
 	  <artwork>
-                            F
-                           /
-                      S-x-E
-                     /     \
-                    A       D--G
-                     \     /
-                      B---C
+                                          F
+                                         /
+                                    S-x-E
+                                   /     \
+                                  A       D--G
+                                   \     /
+                                    B---C
 	  </artwork>
         </figure>
 
@@ -172,7 +172,7 @@
       below, shows all possible primary and Remote-LFA alternate paths for each
       destination.</t>
 
-      <texttable anchor="table1" title="Table 1: Backup paths with Remote-LFA">
+      <texttable anchor="table1" title="Backup paths with Remote-LFA">
         <ttcol align="left">Destination</ttcol>
         <ttcol align="left">Primary Path</ttcol>
         <ttcol align="left">Remote-LFA Backup Path</ttcol>
@@ -229,7 +229,7 @@
       alternate for the given destination. Below is an illustration of the 
       mechanism with the topology in <xref target="ring-topology"/>.</t>
 
-      <texttable anchor="table2" title="Table 2: Types of protection with Remote-LFA">
+      <texttable anchor="table2" title="Types of protection with Remote-LFA">
         <ttcol align="left">Destination</ttcol>
         <ttcol align="left">PQ-node</ttcol>
         <ttcol align="left">Shortest Path(PQ-node to Dest)</ttcol>
@@ -268,20 +268,19 @@
       destination, does not gaurantee node-protection for the same.</t>
 
       <figure anchor="node-prot-ineq" 
-       title="Figure 2: Node-Protection Condition for Remote-LFA">
+       title="Node-Protection Condition for Remote-LFA">
         <artwork>
+      D_opt(Npq, Dst) &lt; D_opt(Npq, Np) + Distance_opt(Np, Dst)
 
-   Distance_opt(Npq, Dst) &lt; Distance_opt(Npq, Np) + Distance_opt(Np, Dst)
-
-        - Npq : The PQ-node being considered
-        - Dst : The destination being protected
-        - Np  : The primary nexthop node on shortest path 
-                from computing router to destination
-        
+      - D_opt(X, Y) : Distance on most optimum path from X to Y.
+      - Npq         : The PQ-node being considered.
+      - Dst         : The destination being protected.
+      - Np          : The primary nexthop node on shortest path 
+                      from computing router to destination.
         </artwork>
       </figure>
 
-      <t>All of the above metric costs except Distance_opt(Npq, Dst), can be obtained 
+      <t>All of the above metric costs except D_opt(Npq, Dst), can be obtained 
       with forward and reverse SPFs with Np(the primary nexthop) as the root, run as 
       part of the regular LFA and Remote-LFA implementation. The Distance_opt(Npq, Dst) 
       metric can only be determined by the additional forward SPF run with Npq(PQ-node) 
@@ -290,7 +289,7 @@
       to determine node-protection with a PQ-node.</t>
 
       <texttable anchor="table3" 
-       title="Table 3: Using Node-protecting condition for Remote-LFA">
+       title="Using Node-protecting condition for Remote-LFA">
         <ttcol align="center">Destination (Dst)</ttcol>
         <ttcol align="center">Primary-NH (Np)</ttcol>
         <ttcol align="center">PQ-node (Npq)</ttcol>
@@ -425,8 +424,7 @@
   </section>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>Many thanks to Bruno Decraene and Stephane Litkowski for their useful
-      comments.</t>
+    <t>Many thanks to Bruno Decraene and Stephane Litkowski for their useful comments.</t>
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
