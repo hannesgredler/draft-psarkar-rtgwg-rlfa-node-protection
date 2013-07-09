@@ -74,7 +74,7 @@
       </address>
     </author>
 
-    <date day="5" month="July" year="2013"/>
+    <date day="8" month="July" year="2013"/>
 
     <area>Routing</area>
 
@@ -425,8 +425,7 @@
   </section>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>Many thanks to Bruno Decraene and Stephane Litkowski
-      for their useful comments.</t>
+      <t></t>
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
