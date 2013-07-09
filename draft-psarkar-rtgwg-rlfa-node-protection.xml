@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-00" ipr="trust200902">
+<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-01" ipr="trust200902">
 
   <!-- ***** FRONT MATTER ***** -->
 
@@ -425,8 +425,8 @@
   </section>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
-    <t>Many thanks to Bruno Decraene and Stephane Litkowski for their useful 
-    comments.</t> 
+      <t>Many thanks to Bruno Decraene and Stephane Litkowski for their useful
+      comments.</t>
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
