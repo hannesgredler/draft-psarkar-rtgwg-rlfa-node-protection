@@ -154,16 +154,15 @@
     to gather all the required path characteristics along each link on the 
     entire Remote-LFA alternate path.</t>
 
-    <t>With current LFA <xref target="RFC5286"/> and Remote-LFA
-    implementations, the forward SPF (and reverse SPF) is run on the 
-    computing router and its immediate 1-hop routers as the roots. 
-    While that enables computation of path attributes (e.g. SRLG, 
-    Admin-groups) first alternate path segment from the computing router  
-    PQ-node, there is no means for the computing router to gather 
-    any path attributes for the path segment from the PQ-node to 
-    destination. Consecutively any policy-based selection of alternate 
-    paths will consider only the path attributes from the computing 
-    router up until the PQ-node.</t>
+    <t>With current LFA <xref target="RFC5286"/> and Remote-LFA implementations, 
+    the forward SPF (and reverse SPF) is run on the computing router and its 
+    immediate 1-hop routers as the roots. While that enables computation of  
+    path attributes (e.g. SRLG, Admin-groups) for first alternate path segment 
+    from the computing router to the PQ-node, there is no means for the computing 
+    router to gather any path attributes for the path segment from the PQ-node to 
+    destination. Consecutively any policy-based selection of alternate paths 
+    will consider only the path attributes from the computing router up until 
+    the PQ-node.</t>
 
     <t> This document describes a procedure for determining node-protection 
     with Remote-LFA. The same procedure are also extended for collection 
@@ -174,8 +173,8 @@
   <section title="Node Protection with Remote-LFA">
 
     <section title="The Problem">
-      <t>To better illustrate the problem and the solution proposed in
-      this document the following topology diagram from the
+      <t>To better illustrate the problem and the solution proposed in this 
+      document the following topology diagram from the 
       <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref>
       draft is being re-used with slight modification.</t>
 
