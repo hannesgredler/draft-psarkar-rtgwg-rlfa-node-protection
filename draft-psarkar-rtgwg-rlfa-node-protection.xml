@@ -160,7 +160,7 @@
     path attributes (e.g. SRLG, Admin-groups) for first alternate path segment 
     from the computing router to the PQ-node, there is no means for the computing 
     router to gather any path attributes for the path segment from the PQ-node to 
-    destination. R2onsecutively any policy-based selection of alternate paths 
+    destination. Consecutively any policy-based selection of alternate paths 
     will consider only the path attributes from the computing router up until 
     the PQ-node.</t>
 
