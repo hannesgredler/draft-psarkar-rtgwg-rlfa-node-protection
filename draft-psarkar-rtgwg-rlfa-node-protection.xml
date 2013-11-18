@@ -100,7 +100,7 @@
       </address>
     </author>
 
-    <date day="29" month="October" year="2013"/>
+    <date day="18" month="November" year="2013"/>
 
     <area>Routing</area>
 
@@ -160,7 +160,7 @@
     path attributes (e.g. SRLG, Admin-groups) for first alternate path segment 
     from the computing router to the PQ-node, there is no means for the computing 
     router to gather any path attributes for the path segment from the PQ-node to 
-    destination. Consecutively any policy-based selection of alternate paths 
+    destination. R2onsecutively any policy-based selection of alternate paths 
     will consider only the path attributes from the computing router up until 
     the PQ-node.</t>
 
@@ -180,108 +180,108 @@
 
       <figure anchor="ring-topology-1" title="Topology 1">
         <artwork>
-                                          F
+                                          D1
                                          /
                                     S-x-E
                                    /     \
-                                  A       D--G
+                                  N       R3--D2
                                    \     /
-                                    B---C
+                                   R1---R2
         </artwork>
       </figure>
 
       <t>In the above topology, for all (non-ECMP) destinations reachable via 
       the S-E link there is no standard LFA alternate. As per the 
       <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> alternate 
-      specifications node C being the only PQ-node for the S-E link provides
+      specifications node R2 being the only PQ-node for the S-E link provides
       nexthop for all the above destinations. <xref target="table1"/> 
       below, shows all possible primary and Remote-LFA alternate paths for each
       destination.</t>
 
-      <texttable anchor="table1" title="Remote-LFA backup paths via PQ-node C">
+      <texttable anchor="table1" title="Remote-LFA backup paths via PQ-node R2">
         <ttcol align="left">Destination</ttcol>
         <ttcol align="left">Primary Path</ttcol>
         <ttcol align="left">PQ-node</ttcol>
         <ttcol align="left">Remote-LFA Backup Path</ttcol>
-        <c>D</c>
-        <c>S->E->D</c>
-        <c>C</c>
-        <c>S=>A=>B=>C->D</c>
+        <c>R3</c>
+        <c>S->E->R3</c>
+        <c>R2</c>
+        <c>S=>N=>R1=>R2->R3</c>
         <c>E</c>
         <c>S->E</c>
-        <c>C</c>
-        <c>S=>A=>B=>C->D->E</c>
-        <c>F</c>
-        <c>S->E->F</c>
-        <c>C</c>
-        <c>S=>A=>B=>C->D->E->F</c>
-        <c>G</c>
-        <c>S->E->D->G</c>
-        <c>C</c>
-        <c>S=>A=>B=>C->D->G</c>
+        <c>R2</c>
+        <c>S=>N=>R1=>R2->R3->E</c>
+        <c>D1</c>
+        <c>S->E->D1</c>
+        <c>R2</c>
+        <c>S=>N=>R1=>R2->R3->E->D1</c>
+        <c>D2</c>
+        <c>S->E->R3->D2</c>
+        <c>R2</c>
+        <c>S=>N=>R1=>R2->R3->D2</c>
       </texttable>
 
       <t>A closer look at <xref target="table1"/> shows that, while the 
-      PQ-node C provides link-protection for all the destinations, it does
+      PQ-node R2 provides link-protection for all the destinations, it does
       not provide node-protection for destinations E and F. In the event of
       the node-failure on primary nexthop E, the alternate path from Remote-LFA
-      nexthop C to E and F also becomes unavailable. So for a Remote-LFA
+      nexthop R2 to E and D1 also becomes unavailable. So for a Remote-LFA
       nexthop to provide node-protection for a given destination, it is
       mandatory that, the shortest path from the given PQ-node to the given
       destination MUST not traverse the primary nexthop. </t>
 
       <t> In another extension of the topology in <xref target="ring-topology-1"/>
-      let us consider an additional link between A and E.</t>
+      let us consider an additional link between N and E.</t>
 
       <figure anchor="ring-topology-2" title="Topology 2">
 	<artwork>
-                                          F
+                                          D1
                                          /
                                     S-x-E
                                    /   / \
-                                  A---+   D--G
+                                  N---+   R3--D2
                                    \     /
-                                    B---C
+                                   R1---R2
 	</artwork>
       </figure>
 
-      <t> In the above topology, the S-E link is no more on any of the shortest 
-      paths from A to D. Hence D is also included in both the Extended-P space 
-      and PQ space of A (w.r.t S-E link) as well as the . <xref target="table2"/> 
-      below, shows all possible primary and R-LFA alternate paths via PQ-node D, 
-      for each destination reachable through the S-E link in the above topology. 
-      The R-LFA alternate paths via PQ-node C remains same as in 
-      <xref target="table1"/>.</t>
+      <t> In the above topology, the S-E link is no more on any of the 
+      shortest paths from N to R3. Hence R3 is also included in both the 
+      Extended-P space and PQ space of E (w.r.t S-E link). 
+      <xref target="table2"/> below, shows all possible primary and R-LFA 
+      alternate paths via PQ-node R3, for each destination reachable 
+      through the S-E link in the above topology. The R-LFA alternate 
+      paths via PQ-node R2 remains same as in <xref target="table1"/>.</t>
 
-      <texttable anchor="table2" title="Remote-LFA backup paths via PQ-node D">
+      <texttable anchor="table2" title="Remote-LFA backup paths via PQ-node R3">
         <ttcol align="left">Destination</ttcol>
         <ttcol align="left">Primary Path</ttcol>
         <ttcol align="left">PQ-node</ttcol>
         <ttcol align="left">Remote-LFA Backup Path</ttcol>
-        <c>D</c>
-        <c>S->E->D</c>
-        <c>D</c>
-        <c>S=>A=>E=>D</c>
+        <c>R3</c>
+        <c>S->E->R3</c>
+        <c>R3</c>
+        <c>S=>N=>E=>R3</c>
         <c>E</c>
         <c>S->E</c>
-        <c>D</c>
-        <c>S=>A=>E=>D->E</c>
-        <c>F</c>
-        <c>S->E->F</c>
-        <c>D</c>
-        <c>S=>A=>E=>D->E->F</c>
-        <c>G</c>
-        <c>S->E->F</c>
-        <c>D</c>
-        <c>S=>A=>E=>D->G</c>
+        <c>R3</c>
+        <c>S=>N=>E=>R3->E</c>
+        <c>D1</c>
+        <c>S->E->D1</c>
+        <c>R3</c>
+        <c>S=>N=>E=>R3->E->D1</c>
+        <c>D2</c>
+        <c>S->E->D1</c>
+        <c>R3</c>
+        <c>S=>N=>E=>R3->D2</c>
       </texttable>
 
       <t>Again a closer look at <xref target="table2"/> shows that, unlike 
-      <xref target="table1"/>, where the single PQ-node C provided node-protection, 
-      for destinations D and G, if we choose D as the R-LFA nexthop, it does not 
-      provide node-protection for D and G anymore. If S chooses D as the R-LFA 
+      <xref target="table1"/>, where the single PQ-node R2 provided node-protection, 
+      for destinations R3 and G, if we choose R3 as the R-LFA nexthop, it does not 
+      provide node-protection for R3 and D1 anymore. If S chooses R3 as the R-LFA 
       nexthop, in the event of the node-failure on primary nexthop E, the alternate 
-      path from S to R-LFA nexthop D also becomes unavailable. So for a Remote-LFA 
+      path from S to R-LFA nexthop R3 also becomes unavailable. So for a Remote-LFA 
       nexthop to provide node-protection for a given destination, it is also mandatory 
       that, the shortest path from S to the chosen PQ-node MUST not traverse the 
       primary nexthop node.</t>
@@ -303,24 +303,23 @@
         This MUST exclude any direct neighbor for which there is atleast one ECMP 
         path from the direct neighbor traversing the link(S-E) being protected.</t>
 
-        <t> A node Npq is in link-protecting extended P-space w.r.t to the link
+        <t> A node Y is in link-protecting extended P-space w.r.t to the link
         (S-E) being protected, if and only if, there exists atleast one direct 
 	neighbor of S, Ni, other than primary nexthop E, that satisfies the 
         following condition.</t> 
 
         <figure anchor="lp-extp-cond" title="Link-Protecting Ext-P-Space Condition">
           <artwork>
-D_opt(Ni,Npq) &lt; D_opt(Ni,S) + D_opt(S,E) + D_opt(E,Npq)
+D_opt(Ni,Y) &lt; D_opt(Ni,S) + D_opt(S,E) + D_opt(E,Y)
 
 Where, 
 Where, 
   D_opt(A,B) : Distance on most optimum path from A to B.
-          D  : The destination node.
           E  : The primary nexthop on shortest path from S 
                to destination.
          Ni  : A direct neighbor of S other than primary 
                nexthop E.
-        Npq  : The node being evaluated for link-protecting 
+          Y  : The node being evaluated for link-protecting 
                extended P-Space.
 
 	  </artwork>
@@ -336,7 +335,7 @@ Where,
         MUST exclude any direct neighbors for which there is atleast one ECMP path 
         from the direct neighbor traversing the node E being protected.</t>
 
-        <t> A node Npq is in node-protecting extended P-space w.r.t to the node 
+        <t> A node Y is in node-protecting extended P-space w.r.t to the node 
         E being protected, if and only if, there exists atleast one direct neighbor 
 	of S, Ni, other than primary nexthop E, that satisfies the following 
         condition.</t>
@@ -344,26 +343,25 @@ Where,
         <figure anchor="np-extp-cond" title="Node-Protecting Ext-P-Space Condition">
           <artwork>
 
-D_opt(Ni,Npq) &lt; D_opt(Ni,E) + D_opt(E,Npq)
+D_opt(Ni,Y) &lt; D_opt(Ni,E) + D_opt(E,Y)
 
 Where, 
-  D_opt(A,B) : Distance on most optimum path from A to B.
-          D  : The destination node.
+  D_opt(A,B) : Distance on most optimum path from R1 to B.
           E  : The primary nexthop on shortest path from S 
                to destination.
           Ni : A direct neighbor of S other than primary 
                nexthop E.
-         Npq : The node being evaluated for node-protecting 
+           Y : The node being evaluated for node-protecting 
                extended P-Space.
 
 	  </artwork>
         </figure>
 
-        <t> It must be noted that a node Npq satisfying the condition in 
+        <t> It must be noted that a node Y satisfying the condition in 
         <xref target="np-extp-cond"/> above only guarantees that the R-LFA alternate 
-        path segment from S via direct neighbor Ni to the PQ-node Npq is not affected 
+        path segment from S via direct neighbor Ni to the PQ-node Y is not affected 
 	in the event of a node failure of E. It does not yet guarantee that the path 
-        segment from PQ-node Npq to the destination is also unaffected by the same 
+        segment from PQ-node Y to the destination is also unaffected by the same 
 	failure event.</t>
 
       </section>
@@ -372,25 +370,24 @@ Where,
         <t> The <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> draft 
 	already defines this. The Q-space for a link S-E being protected is the 
 	set of routers that can reach primary node E, without traversing the S-E  
-        link on any of the shortest path from the node Npq to primary nexthop E. 
+        link on any of the shortest path from the node Y to primary nexthop E. 
         This MUST exclude any destination for which there is atleast one ECMP 
-        path from the node Npq to the primary nexthop E traversing the link(S-E) 
+        path from the node Y to the primary nexthop E traversing the link(S-E) 
         being protected.</t>
 
-        <t> A node Npq is in Q-space w.r.t to the link (S-E) being protected, 
+        <t> A node Y is in Q-space w.r.t to the link (S-E) being protected, 
         if and only if, the following condition is satisfied.</t> 
 
         <figure anchor="q-cond" title="Q-Space Condition">
           <artwork>
-D_opt(Npq,E) &lt; D_opt(S,E) + D_opt(Npq,S)
+D_opt(Y,E) &lt; D_opt(S,E) + D_opt(Y,S)
 
 Where, 
 Where, 
-  D_opt(A,B) : Distance on most optimum path from A to B.
-          D  : The destination node.
+  D_opt(A,B) : Distance on most optimum path from R1 to B.
           E  : The primary nexthop on shortest path from S 
                to destination.
-        Npq  : The node being evaluated for Q-Space.
+          Y  : The node being evaluated for Q-Space.
 
 	  </artwork>
         </figure>
@@ -399,81 +396,101 @@ Where,
 
       <section title="Link-Protecting PQ Space">
 
-        <t> A node Npq is in link-protecting PQ space w.r.t to the link (S-E) being 
-        protected, if and only if, Npq is present in both link-protecting extended 
+        <t> A node Y is in link-protecting PQ space w.r.t to the link (S-E) being 
+        protected, if and only if, Y is present in both link-protecting extended 
         P-space and the Q-space for the link being protected.</t> 
 
       </section>
 
-      <section title="Node-Protecting PQ Space">
-        <t> A node Npq is in node-protecting PQ space w.r.t to the link (S-E) being 
-        protected, if and only if, Npq is present in both node-protecting extended 
+      <section title="Candidate Node-Protecting PQ Space">
+        <t> A node Y is in candidate node-protecting PQ space w.r.t to the node (E) 
+        being protected, if and only if, Y is present in both node-protecting extended 
         P-space and the Q-space for the link being protected.</t> 
 
-        <t> Again it must be noted that a node Npq being in node-protecting PQ-space 
-        does not guarantee that the R-LFA alternate path in entirety is unaffected 
-	in the event of a node failure of primary nexthop node E. It only guarantees 
-	that the path segment from S to PQ-node Npq is unaffected by the same failure 
-        event.</t>
+        <t> Again it must be noted that a node Y being in candidate node-protecting 
+        PQ-space does not guarantee that the R-LFA alternate path via the same, in 
+	entirety, is unaffected in the event of a node failure of primary nexthop node 
+	E. It only guarantees that the path segment from S to PQ-node Y is unaffected 
+        by the same failure event. The PQ-nodes in the candidate node-protecting 
+        PQ space may provide node protection for only a subset of destinations 
+        that are reachable through the corresponding primary link.</t>
       </section>
 
     </section>
 
-    <section title="Computing Node-protecting R-LFA Path">
+    <section anchor="node-protecting-rlfa" 
+     title="Computing Node-protecting R-LFA Path">
+      <t> The R-LFA alternate path through a given PQ-node to a given
+      destination comprises of two path segments as follows.</t>
 
-      <section title="Computing Node-protecting PQ-Nodes for Primary nexthops">
+      <t><list style='numbers'>
+	<t>Path segment from the computing router to the
+	PQ-node (Remote-LFA alternate nexthop), and</t>
+	<t>Path segment from the PQ-node to the destination
+	being protected. </t>
+      </list></t>
 
-        <t> To choose a node-protecting R-LFA nexthop for a destination D, router S  
-	needs to consider a PQ-node from the node-protecting PQ-space for the primary 
-        nexthop E on shortest path from S to D. As mentioned in <xref target="np-extp-space"/>, 
-        to consider a PQ-node as node-protecting PQ-node, there must be atleast one 
-        direct neighbor Ni of S, such that all shortest paths from Ni to the PQ-node 
-        does not traverse primary nexthop node E.</t>
+      <t> So to ensure a R-LFA alternate path for a given destination provides 
+      node-protection we need to ensure that none of the above path segments are 
+      unaffected in the event of failure of the primary nexthop node. Sections 
+      <xref target="plr-to-pq"/> and <xref target="pqnode-to-dest"/> shows 
+      how this can be ensured.</t>
+
+      <section anchor="plr-to-pq" 
+       title="Computing Node-protecting PQ-Nodes for Primary nexthops">
+
+        <t> To choose a node-protecting R-LFA nexthop for a destination R3, router S  
+	needs to consider a PQ-node from the candidate node-protecting PQ-space for 
+        the primary nexthop E on shortest path from S to R3. As mentioned in 
+        <xref target="np-extp-space"/>, to consider a PQ-node as candidate node-protecting 
+        PQ-node, there must be atleast one direct neighbor Ni of S, such that all 
+        shortest paths from Ni to the PQ-node does not traverse primary nexthop 
+        node E.</t>
 
         <t> Implementations should run the inequality in <xref target="np-extp-space"/> 
         <xref target="np-extp-cond"/> for all direct neighbor, other than primary nexthop 
-        node E, to determine wether a PQ-node Npq is also a node-protecting PQ-node. 
+        node E, to determine wether a PQ-node Y is also a candidate node-protecting PQ-node. 
         All of the metrics needed by this inequality would have been already collected 
         from the forward SPFs rooted at each of direct neighbor S, computed as part of 
         standard LFA <xref target="RFC5286"/> implementation. With reference to the 
         topology in <xref target="ring-topology-2"/>, <xref target="table3"/> below 
-        shows how the above condition can be used to determine the node-protecting 
+        shows how the above condition can be used to determine the candidate node-protecting 
         PQ-space for S-E link (primary nexthop E)</t>
 
         <texttable anchor="table3" 
          title="Node-protection evaluation for R-LFA repair tunnel to PQ-node">
-        <ttcol align="center">PQ-node (Npq)</ttcol>
+        <ttcol align="center">PQ-node (Y)</ttcol>
         <ttcol align="center">Direct Nbr (Ni)</ttcol>
-        <ttcol align="center">D_opt (Ni,Npq)</ttcol>
+        <ttcol align="center">D_opt (Ni,Y)</ttcol>
         <ttcol align="center">D_opt (Ni,E)</ttcol>
-        <ttcol align="center">D_opt (E,Npq)</ttcol>
+        <ttcol align="center">D_opt (E,Y)</ttcol>
         <ttcol align="center">Condition Met</ttcol>
-        <c>C</c>
-        <c>A</c>
-        <c>2 (A,C)</c>
-        <c>1 (A,E)</c>
-        <c>2 (E,C)</c>
+        <c>R2</c>
+        <c>N</c>
+        <c>2 (N,R2)</c>
+        <c>1 (N,E)</c>
+        <c>2 (E,R2)</c>
         <c>Yes</c>
-        <c>D</c>
-        <c>A</c>
-        <c>2 (A,D)</c>
-        <c>1 (A,E)</c>
-        <c>1 (E,D)</c>
+        <c>R3</c>
+        <c>N</c>
+        <c>2 (N,R3)</c>
+        <c>1 (N,E)</c>
+        <c>1 (E,R3)</c>
         <c>No</c>
         </texttable>
 
-        <t>As seen in the above <xref target="table3"/> , D does not meet the 
-        node-protecting extended-p-space inequality And so, while C is in node-protecting 
-        PQ space, D is not.</t>
+        <t>As seen in the above <xref target="table3"/> , R3 does not meet the 
+        node-protecting extended-p-space inequality And so, while R2 is in candidate 
+        node-protecting PQ space, R3 is not.</t>
 
         <t>Some SPF implementations may also produce a list of links and nodes traversed 
         on the shortest path(s) from a given root to others. In such implementations, 
         router S may have executed a forward SPF with each of it's direct neighbors as 
         the SPF root, executed as  part of the standard LFA <xref target="RFC5286"/> 
         computations. So S may re-use the list of links and nodes collected from the same 
-        SPF computations, to decide wether a PQ-node Npq is a node-protecting PQ-node or 
-        not. A PQ-node Npq shall be considered as node-protecting, if and only if, 
-        there is atleast one direct neighbor of S, other than the one via primary nexthop 
+        SPF computations, to decide wether a PQ-node Y is a candidate node-protecting PQ-node or 
+        not. A PQ-node Y shall be considered as a node-protecting, if and only if, 
+        there is atleast one direct neighbor of S, other than the primary nexthop 
         E, for which, the primary nexthop node E does not exist on the list of nodes 
         traversed on any of the shortest path(s) from the direct neighbor to the 
         PQ-node. <xref target="table4"/> below is an illustration of the mechanism with 
@@ -484,36 +501,36 @@ Where,
           <ttcol align="left">Repair Tunnel Path(Repairing router to PQ-node)</ttcol>
           <ttcol align="left">Link-Protection</ttcol>
           <ttcol align="left">Node-Protection</ttcol>
-          <c>C</c>
-          <c>S->A->B->C</c>
+          <c>R2</c>
+          <c>S->N->R1->R2</c>
           <c>Yes</c>
           <c>Yes</c>
-          <c>C</c>
-          <c>S->E->D->C</c>
+          <c>R2</c>
+          <c>S->E->R3->R2</c>
           <c>No</c>
           <c>No</c>
-          <c>D</c>
-          <c>S->A->E->D</c>
+          <c>R3</c>
+          <c>S->N->E->R3</c>
           <c>Yes</c>
           <c>No</c>
         </texttable>
 
-        <t>As seen in the above <xref target="table4"/> while C is node-protecting
-        Remote-LFA nexthop for D and G, it is not so for E and F, since the
-        primary nexthop E is in the shortest path from C to E and F.</t>
+        <t>As seen in the above <xref target="table4"/> while R2 is candidate node-protecting
+        Remote-LFA nexthop for R3 and G, it is not so for E and F, since the
+        primary nexthop E is in the shortest path from R2 to E and F.</t>
 
       </section>
 
       <section anchor="pqnode-to-dest" 
        title="Computing node-protecting paths from PQ-nodes to destinations">
 
-        <t> Once a computing router finds all the node-protecting PQ-nodes for a 
+        <t> Once a computing router finds all the candidate node-protecting PQ-nodes for a 
         given directly attached primary link, it shall follow the procedure in proposed 
         in this section, to choose one or more node-protecting R-LFA paths, for 
         destinations reachable through the same primary link in the primary SPF graph.</t>
 
         <t> To find a node-protecting R-LFA path for a given destination, the computing 
-        router needs to pick a subset of PQ-nodes from the node-protecting PQ-space for 
+        router needs to pick a subset of PQ-nodes from the candidate node-protecting PQ-space for 
         the corresponding primary nexthop, such that all the path(s) from the PQ-node(s) 
         to the given destination remain unaffected in the event of a node failure of 
         primary nexthop node. To ensure this, the computing router will need to ensure 
@@ -535,37 +552,37 @@ Where,
         the path segment from the PQ-node to the given destination.</t>
 
         <figure anchor="node-prot-ineq-2" 
-         title="Node-Protection Condition for Remote-LFA - 2">
+         title="Node-Protecting Condition for PQ-node to Destination">
           <artwork>
-      D_opt(Npq,D) &lt; D_opt(Npq,E) + Distance_opt(E,D)
+      D_opt(Y,D) &lt; D_opt(Y,E) + Distance_opt(E,D)
 
 Where, 
-  D_opt(A,B) : Distance on most optimum path from A to B.
+  D_opt(A,B) : Distance on most optimum path from R1 to B.
           D  : The destination node.
           E  : The primary nexthop on shortest path from S 
                to destination.
-         Npq : The node-protecting PQ-node being evaluated 
+          Y  : The node-protecting PQ-node being evaluated 
           </artwork>
         </figure>
 
-        <t>All of the above metric costs except D_opt(Npq, D), can be obtained with 
-        forward and reverse SPFs with Np(the primary nexthop) as the root, run as 
-        part of the regular LFA and Remote-LFA implementation. The Distance_opt(Npq, D) 
+        <t>All of the above metric costs except D_opt(Y, D), can be obtained with 
+        forward and reverse SPFs with E(the primary nexthop) as the root, run as 
+        part of the regular LFA and Remote-LFA implementation. The Distance_opt(Y, D) 
         metric can only be determined by the additional forward SPF run with PQ-node 
-        Npq as the root. With reference to the topology in <xref target="ring-topology-2"/>, 
+        Y as the root. With reference to the topology in <xref target="ring-topology-2"/>, 
         <xref target="table5"/> below shows how the above condition can be used 
-        to determine node-protection with node-protecting PQ-node C.</t>
+        to determine node-protection with node-protecting PQ-node R2.</t>
 
         <texttable anchor="table5" 
          title="Node-protection evaluation for R-LFA path segment between PQ-node 
          and destination">
           <ttcol align="center">Destination (D)</ttcol>
           <ttcol align="center">Primary-NH (E)</ttcol>
-          <ttcol align="center">D_opt (Npq, D)</ttcol>
-          <ttcol align="center">D_opt (Npq, E)</ttcol>
+          <ttcol align="center">D_opt (Y, D)</ttcol>
+          <ttcol align="center">D_opt (Y, E)</ttcol>
           <ttcol align="center">D_opt (E, D)</ttcol>
           <ttcol align="center">Condition Met</ttcol>
-          <c>D</c>
+          <c>R3</c>
           <c>E</c>
           <c>1 (C,D)</c>
           <c>2 (C,E)</c>
@@ -577,13 +594,13 @@ Where,
           <c>2 (C,E)</c>
           <c>0 (E,E)</c>
           <c>No</c>
-          <c>F</c>
+          <c>D1</c>
           <c>E</c>
           <c>3 (C,F)</c>
           <c>2 (C,E)</c>
           <c>1 (E,F)</c>
           <c>No</c>
-          <c>G</c>
+          <c>D2</c>
           <c>E</c>
           <c>2 (C,G)</c>
           <c>2 (C,E)</c>
@@ -591,9 +608,9 @@ Where,
           <c>Yes</c>
         </texttable>
 
-        <t>As seen in the above example above, C does not meet the node-
+        <t>As seen in the above example above, R2 does not meet the node-
         protecting inequality for destination E, and F. And so, once again, 
-        while C is a node-protecting Remote-LFA nexthop for D and G, 
+        while R2 is a node-protecting Remote-LFA nexthop for R3 and G, 
         it is not so for E and F.</t>
 
         <t>In SPF implementations that also produce a list of links and nodes 
@@ -604,7 +621,7 @@ Where,
         the list contains the primary nexthop node, the PQ-node does not 
         provide node-protection. Else, the PQ-node guarantees node-protecting 
         alternate for the given destination. Below is an illustration of the 
-        mechanism with node-protecting PQ-node C in the topology in 
+        mechanism with candidate node-protecting PQ-node R2 in the topology in 
         <xref target="ring-topology-2"/>.</t>
 
         <texttable anchor="table6" 
@@ -613,27 +630,27 @@ Where,
           <ttcol align="left">Shortest Path (Repairing router to PQ-node)</ttcol>
           <ttcol align="left">Link-Protection</ttcol>
           <ttcol align="left">Node-Protection</ttcol>
-          <c>D</c>
-          <c>C->D</c>
+          <c>R3</c>
+          <c>R2->R3</c>
           <c>Yes</c>
           <c>Yes</c>
           <c>E</c>
-          <c>C->D->E</c>
+          <c>R2->R3->E</c>
           <c>Yes</c>
           <c>No</c>
-          <c>F</c>
-          <c>C->D->E->F</c>
+          <c>D1</c>
+          <c>R2->R3->E->D1</c>
           <c>Yes</c>
           <c>No</c>
-          <c>G</c>
-          <c>C->D->G</c>
+          <c>D2</c>
+          <c>R2->R3->D2</c>
           <c>Yes</c>
           <c>Yes</c>
         </texttable>
 
-        <t>As seen in the above example while C is node-protecting
-        Remote-LFA nexthop for D and G, it is not so for E and F, since the
-        primary nexthop E is in the shortest path from C to E and F.</t>
+        <t>As seen in the above example while R2 is candidate node-protecting
+        R-LFA nexthop for R3 and G, it is not so for E and F, since the
+        primary nexthop E is in the shortest path from R2 to E and F.</t>
 
         <t>The procedure described in this document helps no more than to  
         determine whether a given Remote-LFA alternate provides node-protection 
@@ -664,13 +681,15 @@ Where,
         for this limit and may provide user with a configuration knob to override 
         the default limit. Implementations MUST also evaluate some default 
         preference criteria while considering a PQ-node in this subset. Finally, 
-        implementations MAY also allow user override the default preference criteria, 
-        by providing a policy configuration for the same.</t> 
+        implementations MAY also allow user to override the default preference 
+        criteria, by providing a policy configuration for the same.</t> 
 
         <t> A suggested default criteria for PQ-node selection will be to put a score 
         on each PQ-node, proportional to the number of primary interfaces and remote 
-        destination routers being protected by it, and then pick PQ-nodes based on this 
-        score.</t>
+        destination routers being protected by it, and then pick PQ-nodes based on 
+        this score. A more appropriate heuristsics can be devised, based on 
+        in-depth study of coverage provided by R-LFA, in the networks where they 
+        are mostly deployed. The same can then be used for PQ-node selection.</t>
 
         <t> Once a subset of PQ-nodes is found, computing router shall run a forward 
         SPF on each of the PQ-nodes in the subset to continue with procedures proposed 
@@ -686,28 +705,25 @@ Where,
     <section title="The Problem">
       <t>With the regular <xref target="I-D.ietf-rtgwg-remote-lfa">Remote-LFA</xref> 
       functionality the computing router may compute more than one PQ-node
-      as usable Remote-LFA alternate nexthops. Additionally a alternate selection
+      as usable Remote-LFA alternate nexthops. Additionally an alternate selection
       policy may be configured to enable the network operator to choose one
       of them as the most appropriate Remote-LFA alternate. For such policy-based 
       alternate selection to run, all the relevant path characteristics for each 
       the alternate paths (one through each of the PQ-nodes), needs to be
-      collected. The Remote-LFA alternate path through a given PQ-node to a given
-      destination comprises of two path segments as follows.</t>
-      <t><list style='numbers'>
-	<t>Path segment from the computing router to the
-	PQ-node (Remote-LFA alternate nexthop), and</t>
-	<t>Path segment from the PQ-node to the destination
-	being protected. </t>
-      </list></t>
+      collected. As mentioned befor in section <xref target="node-protecting-rlfa"/> 
+      the R-LFA alternate path through a given PQ-node to a given destination 
+      comprises of two path segments.</t>
 
-      <t>The first Path segment can be calculated from the regular forward SPF 
-      done as part of standard and remote LFA computations. However without the 
-      mechanism proposed in section <xref target="pqnode-to-dest"/> of this 
-      document, there is no way to determine the path characteristics for the 
-      second path segment. In the absence of the path characteristics for the 
+      <t>The first path segment (i.e. from the computing router to the PQ-node) 
+      can be calculated from the regular forward SPF done as part of standard and 
+      remote LFA computations. However without the mechanism proposed in section 
+      <xref target="pqnode-to-dest"/> of this document, there is no way to 
+      determine the path characteristics for the second path segment (i.e from the
+      PQ-node to the destination). In the absence of the path characteristics for the 
       second path segment, two Remote-LFA alternate path may be equally preferred 
       based on the first path segments characteristics only, although the 
       second path segment attributes may be different.</t>
+
     </section>
 
     <section title="The Solution">
@@ -723,7 +739,7 @@ Where,
   </section>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
-    <t>Many thanks to Bruno Decraene and Stephane Litkowski for their useful comments.</t>
+    <t>Many thanks to Bruno Decraene for his useful comments.</t>
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
