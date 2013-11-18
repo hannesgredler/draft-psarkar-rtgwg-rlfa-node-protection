@@ -435,7 +435,7 @@ Where,
       how this can be ensured.</t>
 
       <section anchor="plr-to-pq" 
-       title="Computing Node-protecting PQ-Nodes for Primary nexthops">
+       title="Computing Candidate Node-protecting PQ-Nodes for Primary nexthops">
 
         <t> To choose a node-protecting R-LFA nexthop for a destination R3, router S  
 	needs to consider a PQ-node from the candidate node-protecting PQ-space for 
