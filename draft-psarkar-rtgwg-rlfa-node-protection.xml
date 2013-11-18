@@ -313,7 +313,6 @@
 D_opt(Ni,Y) &lt; D_opt(Ni,S) + D_opt(S,E) + D_opt(E,Y)
 
 Where, 
-Where, 
   D_opt(A,B) : Distance on most optimum path from A to B.
           E  : The primary nexthop on shortest path from S 
                to destination.
@@ -383,7 +382,6 @@ Where,
 D_opt(Y,E) &lt; D_opt(S,E) + D_opt(Y,S)
 
 Where, 
-Where, 
   D_opt(A,B) : Distance on most optimum path from R1 to B.
           E  : The primary nexthop on shortest path from S 
                to destination.
@@ -449,7 +447,7 @@ Where,
 
         <t> Implementations should run the inequality in <xref target="np-extp-space"/> 
         <xref target="np-extp-cond"/> for all direct neighbor, other than primary nexthop 
-        node E, to determine wether a PQ-node Y is also a candidate node-protecting PQ-node. 
+        node E, to determine whether a PQ-node Y is also a candidate node-protecting PQ-node. 
         All of the metrics needed by this inequality would have been already collected 
         from the forward SPFs rooted at each of direct neighbor S, computed as part of 
         standard LFA <xref target="RFC5286"/> implementation. With reference to the 
@@ -488,7 +486,7 @@ Where,
         router S may have executed a forward SPF with each of it's direct neighbors as 
         the SPF root, executed as  part of the standard LFA <xref target="RFC5286"/> 
         computations. So S may re-use the list of links and nodes collected from the same 
-        SPF computations, to decide wether a PQ-node Y is a candidate node-protecting PQ-node or 
+        SPF computations, to decide whether a PQ-node Y is a candidate node-protecting PQ-node or 
         not. A PQ-node Y shall be considered as a node-protecting, if and only if, 
         there is atleast one direct neighbor of S, other than the primary nexthop 
         E, for which, the primary nexthop node E does not exist on the list of nodes 
