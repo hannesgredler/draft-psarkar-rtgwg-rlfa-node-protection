@@ -552,7 +552,7 @@ Where,
         <figure anchor="node-prot-ineq-2" 
          title="Node-Protecting Condition for PQ-node to Destination">
           <artwork>
-      D_opt(Y,D) &lt; D_opt(Y,E) + Distance_opt(E,D)
+D_opt(Y,D) &lt; D_opt(Y,E) + Distance_opt(E,D)
 
 Where, 
   D_opt(A,B) : Distance on most optimum path from R1 to B.
