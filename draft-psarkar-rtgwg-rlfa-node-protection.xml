@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-04" ipr="trust200902">
+<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-05" ipr="trust200902">
 
   <!-- ***** FRONT MATTER ***** -->
 
@@ -61,20 +61,6 @@
       </address>
     </author>
 
-    <author initials="H." surname="Raghuveer" fullname="Harish Raghuveer">
-      <organization>Juniper Networks, Inc.</organization>
-      <address>
-      <postal>
-      <street>Electra, Exora Business Park</street>
-      <city>Bangalore</city>
-      <region>KA</region>
-      <code>560103</code>
-      <country>India</country>
-      </postal>
-      <email>hraghuveer@juniper.net</email>
-      </address>
-    </author>
-
     <author fullname="Chris Bowers" initials="C." surname="Bowers">
       <organization>Juniper Networks, Inc.</organization>
       <address>
@@ -100,7 +86,16 @@
       </address>
     </author>
 
-    <date day="08" month="April" year="2014"/>
+    <author initials="H." surname="Raghuveer" fullname="Harish Raghuveer">
+      <!-- organization/> -->
+      <address>
+        <!-- postal><street/><city/><region/><code/><country/></postal -->
+      <!-- <phone/> -->
+      <email>harish.r.prabhu@gmail.com</email>
+      </address>
+    </author>
+
+    <date day="06" month="June" year="2014"/>
 
     <area>Routing</area>
 
@@ -171,6 +166,18 @@
   </section>
 
   <section title="Node Protection with Remote-LFA">
+    <t> Node-protection is required to provide protection of traffic on a 
+    given forwarding node, against the failure of the first-hop node on the 
+    primary forwarding path. Such protection becomes more critical in the 
+    absence of mechanisms like non-stop-routing in the network. Certain 
+    operators refrains from deploying  non-stop-routing in their network,  
+    due to the significant additional performance complexities it comes 
+    along with. In such cases node-protection is a must to gaurantee 
+    un-interrupted flow of traffic, even in the case of an entire forwarding 
+    node going down.</t>
+
+    <t> The follwoing sections discusses the node-protection problem in the 
+    context of Remote-LFA and proposes a solution for solving the same. </t>
 
     <section title="The Problem">
       <t>To better illustrate the problem and the solution proposed in this 
@@ -271,7 +278,7 @@
         <c>R3</c>
         <c>S=>N=>E=>R3->E->D1</c>
         <c>D2</c>
-        <c>S->E->D1</c>
+        <c>S->E->R3->D2</c>
         <c>R3</c>
         <c>S=>N=>E=>R3->D2</c>
       </texttable>
@@ -660,7 +667,7 @@ Where,
 
       </section>
 
-      <section title="Limiting extra computational overhead">
+      <section title="Limiting extra computational overhead" anchor="pq-node-limit">
 
         <t> In addition to the extra reverse SPF computation, one per directly 
         connected neighbor, suggested by the <xref target="I-D.ietf-rtgwg-remote-lfa">
@@ -680,12 +687,18 @@ Where,
         implementations MAY also allow user to override the default preference 
         criteria, by providing a policy configuration for the same.</t> 
 
-        <t> A suggested default criteria for PQ-node selection will be to put a score 
-        on each PQ-node, proportional to the number of primary interfaces and remote 
-        destination routers being protected by it, and then pick PQ-nodes based on 
-        this score. A more appropriate heuristsics can be devised, based on 
-        in-depth study of coverage provided by R-LFA, in the networks where they 
-        are mostly deployed. The same can then be used for PQ-node selection.</t>
+        <t> This document proposes that implementations SHOULD use a default 
+        preference criteria for PQ-node selection which will put a score on each 
+        PQ-node, proportional to the number of primary interfaces for which it 
+        provides coverage, its distance from the computing router, and its 
+        router-id (or system-id in case of IS-IS).  PQ-nodes that cover more 
+        primary interfaces SHOULD be preferred over PQ-nodes that cover fewer 
+        primary interfaces.  When two or more PQ-nodes cover the same number of 
+        primary interfaces, PQ-nodes which are closer (based on metric) to the 
+        computing router SHOULD be preferred over PQ-nodes farther away from it. 
+        For PQ-nodes that cover the same number of primary interfaces and are 
+        the same distance from the the computing router, the PQ-node with smaller 
+        router-id (or system-id in case of IS-IS) SHOULD be preferred.</t>
 
         <t> Once a subset of PQ-nodes is found, computing router shall run a forward 
         SPF on each of the PQ-nodes in the subset to continue with procedures proposed 
@@ -731,11 +744,22 @@ Where,
       facilitate more accurate alternate path selection while running the alternate 
       selection policy.</t>
 
+      <t>Like specified in <xref target="pq-node-limit"/> to limit the computational 
+      overhead of the approach proposed, forward SPF computations MUST be run on a selected 
+      subset from the entire set of PQ-nodes computed in the network, with a finite limit 
+      on the number of PQ-nodes in the subset. The detailed suggestion on how to select 
+      this subset is specified in the same section. While this limits the number of possible
+      alternate paths provided to the alternate-selection policy, this is needed keep the 
+      computational complexity within affordable limits. However if the alternate-selection 
+      policy is very restrictive this may leave few destinations in the entire toplogy 
+      without protection. Yet this limitation provides a necessary tradeoff between 
+      extensive coverage and immense computational overhead.</t>
     </section>
   </section>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
-    <t>Many thanks to Bruno Decraene for his useful comments.</t>
+    <t>Many thanks to Bruno Decraene for providing his useful comments. We would also 
+    like to thank Uma Chunduri for reviewing this document and providing valuable feedback.</t>
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
