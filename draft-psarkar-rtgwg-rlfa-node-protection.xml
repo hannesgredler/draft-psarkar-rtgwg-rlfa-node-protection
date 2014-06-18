@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-02" ipr="trust200902">
+<rfc category="std" docName="draft-psarkar-rtgwg-rlfa-node-protection-03" ipr="trust200902">
 
   <!-- ***** FRONT MATTER ***** -->
 
@@ -100,7 +100,7 @@
       </address>
     </author>
 
-    <date day="18" month="November" year="2013"/>
+    <date day="20" month="December" year="2013"/>
 
     <area>Routing</area>
 
@@ -345,7 +345,7 @@ Where,
 D_opt(Ni,Y) &lt; D_opt(Ni,E) + D_opt(E,Y)
 
 Where, 
-  D_opt(A,B) : Distance on most optimum path from R1 to B.
+  D_opt(A,B) : Distance on most optimum path from A to B.
           E  : The primary nexthop on shortest path from S 
                to destination.
           Ni : A direct neighbor of S other than primary 
@@ -382,7 +382,7 @@ Where,
 D_opt(Y,E) &lt; D_opt(S,E) + D_opt(Y,S)
 
 Where, 
-  D_opt(A,B) : Distance on most optimum path from R1 to B.
+  D_opt(A,B) : Distance on most optimum path from A to B.
           E  : The primary nexthop on shortest path from S 
                to destination.
           Y  : The node being evaluated for Q-Space.
@@ -555,7 +555,7 @@ Where,
 D_opt(Y,D) &lt; D_opt(Y,E) + Distance_opt(E,D)
 
 Where, 
-  D_opt(A,B) : Distance on most optimum path from R1 to B.
+  D_opt(A,B) : Distance on most optimum path from A to B.
           D  : The destination node.
           E  : The primary nexthop on shortest path from S 
                to destination.
@@ -582,27 +582,27 @@ Where,
           <ttcol align="center">Condition Met</ttcol>
           <c>R3</c>
           <c>E</c>
-          <c>1 (C,D)</c>
-          <c>2 (C,E)</c>
-          <c>1 (E,D)</c>
+          <c>1 (R2,R3)</c>
+          <c>2 (R2,E)</c>
+          <c>1 (E,R3)</c>
           <c>Yes</c>
           <c>E</c>
           <c>E</c>
-          <c>2 (C,E)</c>
-          <c>2 (C,E)</c>
+          <c>2 (R2,E)</c>
+          <c>2 (R2,E)</c>
           <c>0 (E,E)</c>
           <c>No</c>
           <c>D1</c>
           <c>E</c>
-          <c>3 (C,F)</c>
-          <c>2 (C,E)</c>
-          <c>1 (E,F)</c>
+          <c>3 (R2,D1)</c>
+          <c>2 (R2,E)</c>
+          <c>1 (E,D1)</c>
           <c>No</c>
           <c>D2</c>
           <c>E</c>
-          <c>2 (C,G)</c>
-          <c>2 (C,E)</c>
-          <c>1 (E,G)</c>
+          <c>2 (R2,D2)</c>
+          <c>2 (R2,E)</c>
+          <c>1 (E,D2)</c>
           <c>Yes</c>
         </texttable>
 
@@ -762,7 +762,6 @@ Where,
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5286.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-rtgwg-remote-lfa-02.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-rtgwg-lfa-manageability-00.xml"?>
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-litkowski-rtgwg-node-protect-remote-lfa-00.xml"?>
     </references>
   </back>
 </rfc>
